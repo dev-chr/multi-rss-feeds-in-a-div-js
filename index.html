@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Demo of Multi RSS Feeds in div script</title>
+</head>
+
+<body>
+
+
+<h2>by <a href="http://twitter.com/dev_chris_">@dev_chris_</a></h2>
+
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+  google.load("feeds", "1");
+  var feeds1 = new Array(
+"http://rss.cbc.ca/lineup/topstories.xml",
+"https://www.apple.com/ca/hotnews/feeds/ticker.rss",
+"http://ctvnews.ca/rss/TopStories",
+"http://cdn.us.playstation.com/pscomauth/groups/public/documents/webasset/rss/playstation/Games_PS3.rss"
+  );
+
+  function initialize() {
+      	var numEntr = 4; //indicate the number of feed items to display per rss feed in the array above
+       	var container = document.getElementById("rss-div"); //the div where the feeds print to
+    for (var k=0; k<feeds1.length; k++) {
+    var feed = new google.feeds.Feed(feeds1[k]);
+    feed.setNumEntries(numEntr);
+    feed.setResultFormat(google.feeds.Feed.JSON_FORMAT);
+    feed.load(function(result) {
+      if (!result.error) {
+        for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var humanDate = new Date(entry.publishedDate);
+            var li = document.createElement("li");
+            li.innerHTML = '<h3><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></h3>';
+            li.innerHTML += '<p>' + humanDate.toLocaleDateString() + ' - ' + humanDate.toLocaleTimeString() + '</p>';
+            li.innerHTML += '<p>' + entry.contentSnippet + '</p>'; // replace "contentSnippet" with "content" for full text of the feed item
+            li.innerHTML += '<i>' + entry.author + '</i>'; 
+            container.appendChild(li);
+          }
+	      }
+    });
+  }
+  }
+  google.setOnLoadCallback(initialize);
+  </script>
+  
+  
+  <div id="rss-div"></div>
+  
+  
+
+
+</body>
+</html>
