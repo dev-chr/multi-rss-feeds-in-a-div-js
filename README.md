@@ -1,7 +1,5 @@
-multi-rss-feeds-in-a-div-js
-===========================
-
-
+Display Multiple Rss Feed Items in a DIV
+========================================
 
 Aggregate multiple rss sources to display in a div box in their order of date.
 
